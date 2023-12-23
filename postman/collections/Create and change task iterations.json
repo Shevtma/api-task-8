@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7c8c8bc6-d172-4814-9732-ba8793aedff4",
+		"_postman_id": "65331de9-a87f-4c10-b2f1-8c3b51df02cb",
 		"name": "Create and change task iterations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "3431373-7c8c8bc6-d172-4814-9732-ba8793aedff4"
+		"_uid": "24525134-65331de9-a87f-4c10-b2f1-8c3b51df02cb"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "317e6091-ac33-4e75-b88c-aead74bc40f9",
+						"id": "bf0d64df-687f-4f20-a6b6-5456ef32339a",
 						"exec": [
 							"let jsonData = pm.response.json();",
 							"pm.environment.set('token', jsonData.id_token)"
@@ -21,7 +21,7 @@
 					}
 				}
 			],
-			"id": "000d5bce-1fbe-4442-bb9b-5c896289170d",
+			"id": "4a8bd9ab-4f22-430b-9139-2b816954f337",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -111,7 +111,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "235f919d-8a50-4dad-a4db-3507b6dac55a",
+						"id": "efcb0706-4d67-4235-a67d-4b7e795fdcfb",
 						"exec": [
 							"let currentAmountOfTasks = pm.response.json().length;",
 							"console.log(pm.response.json().length)",
@@ -130,7 +130,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "a3b0ae78-2bad-4037-a331-da3cea4acf58",
+						"id": "ade30b6b-929c-468d-9621-370bc1291802",
 						"exec": [
 							""
 						],
@@ -138,7 +138,7 @@
 					}
 				}
 			],
-			"id": "43a438c7-4c79-44d0-848b-a251515ced36",
+			"id": "2cbfa1ba-7fd6-47fc-837f-dc3cf6a6cbe1",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -182,7 +182,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "47eb0efe-9d81-4616-b88e-6e54e79610b8",
+						"id": "2b6d2302-e81d-49cd-8c1d-3429c7ca3e94",
 						"exec": [
 							"let jsonData = pm.response.json();",
 							"",
@@ -213,7 +213,7 @@
 					}
 				}
 			],
-			"id": "1e3dbd12-d8d7-4ca1-9a81-e38c05cb2eab",
+			"id": "8a00b3e4-f2cc-459a-bdd0-d34f220dcdf0",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -255,7 +255,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "39e2b88c-58d2-4c0a-b861-1e21219d08eb",
+						"id": "45c27a09-f8fd-49d4-b4a7-0c8a948e7b80",
 						"exec": [
 							""
 						],
@@ -263,7 +263,7 @@
 					}
 				}
 			],
-			"id": "32e03ff6-baea-465b-a2e2-3a97c70939ce",
+			"id": "cb5daa90-13b7-4c67-9440-3996ef658078",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -306,13 +306,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a67eb558-5ffd-4c07-9a1c-9dc647995d0a",
+						"id": "be472b2f-4a93-4811-a66a-4f384c920228",
 						"exec": [
 							"let arr = pm.environment.get('ids')",
 							"",
 							"arr.forEach((id)=>{",
 							"    pm.sendRequest(",
-							"        {url: `https://sqlverifier-50d286d70656.herokuapp.com/api/tasks/${id}`,",
+							"        {url: pm.environment.get('baseUrl')+`/tasks/${id}`,",
 							"        method: 'DELETE',",
 							"        header:",
 							"        {'Authorization': 'Bearer ' + pm.environment.get('token'),",
@@ -323,16 +323,16 @@
 							"    });",
 							"})",
 							"",
-							"",
-							"",
-							"",
-							""
+							"pm.environment.unset('token');",
+							"pm.environment.unset('ids');",
+							"pm.environment.unset('currentAmountOfTasks');",
+							"pm.environment.unset('lastID');"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"id": "3f9de192-3f64-45fa-8cd2-68c9041fce4b",
+			"id": "db6301ce-5940-4424-b3ce-798d502baa2d",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -376,7 +376,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "a565044a-0e9e-4dc2-8e8f-13f3573a4c5d",
+				"id": "ddc6207f-fb04-41d0-8aca-7fbcd976eb2f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -386,7 +386,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "006424dc-5fee-4e73-b440-1c4203f89177",
+				"id": "925f1309-7abd-4d79-903a-4d8fb1d7f4c8",
 				"type": "text/javascript",
 				"exec": [
 					""
