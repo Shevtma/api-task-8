@@ -114,14 +114,15 @@
 						"id": "efcb0706-4d67-4235-a67d-4b7e795fdcfb",
 						"exec": [
 							"let currentAmountOfTasks = pm.response.json().length;",
-							"console.log(pm.response.json().length)",
-							"",
 							"pm.environment.set('currentAmountOfTasks', currentAmountOfTasks)",
-							"pm.environment.set(\"ids\", [])",
 							"",
 							"if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
+							"    pm.environment.set(\"ids\", [])",
 							"    postman.setNextRequest('create a task')",
 							"} else {",
+							"    let taskId_arr = pm.response.json().map((task) => {return task.id})",
+							"    pm.environment.set(\"ids\", [taskId_arr[taskId_arr.length-1]])",
+							"    pm.environment.set('lastID', taskId_arr[taskId_arr.length-1])",
 							"    postman.setNextRequest('change task text')}"
 						],
 						"type": "text/javascript"
@@ -191,9 +192,7 @@
 							"});",
 							"",
 							"const ids = pm.environment.get(\"ids\")",
-							"console.log(\"jsonData.id is \" + jsonData.id)",
 							"ids.push(jsonData.id)",
-							"console.log(ids)",
 							"pm.environment.set(\"ids\", ids)",
 							"",
 							"pm.environment.set('lastID', jsonData.id)",
@@ -207,6 +206,16 @@
 							"} else {",
 							"    postman.setNextRequest('change task text')",
 							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e6ee8a99-8506-4450-98cb-94609789787e",
+						"exec": [
 							""
 						],
 						"type": "text/javascript"
