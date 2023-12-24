@@ -1,0 +1,1808 @@
+{
+	"info": {
+		"_postman_id": "03e0593e-2033-4fbc-9c9c-2050c77b266b",
+		"name": "Create and change task iterations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "24525134-03e0593e-2033-4fbc-9c9c-2050c77b266b"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba1cd5d9-e508-4ca2-99d3-66d231a17dc6",
+						"exec": [
+							"// Проверка статуса ответа",
+							"// Если статус - 200 OK, выполняем проверки успешного ответа",
+							"if (pm.response.code === 200) {",
+							"    // Проверка формата ответа",
+							"    pm.test(\"Response has id_token\", function () {",
+							"        pm.response.to.have.jsonBody(\"id_token\");",
+							"    });",
+							"",
+							"    let jsonData = pm.response.json();",
+							"    pm.environment.set('token', jsonData.id_token)",
+							"",
+							"} else if (pm.response.code === 401) {",
+							"    // Если статус - 401 Unauthorized, выполняем проверки для неуспешного ответа",
+							"    pm.test(\"Response has error message\", function () {",
+							"        pm.response.to.have.jsonBody(\"title\", \"Unauthorized\");",
+							"        pm.response.to.have.jsonBody(\"status\", 401);",
+							"        pm.response.to.have.jsonBody(\"detail\", \"Bad credentials\");",
+							"    });",
+							"",
+							"    // Дополнительные проверки для неуспешного ответа, если необходимо",
+							"    // ...",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "ccfb050d-2a5b-4966-a659-669d45e7282f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+					},
+					{
+						"key": "Referer",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "x-mock-match-request-headers",
+						"value": "400",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "59496dd8-2b39-4b1b-a861-2f9f9b604d9d",
+					"name": "login-successful",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "400",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 20:44:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMzUzNzA0OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDM0NTA2NDh9.GLD1f2FNm_MKIXGKuDR5WXIxkERmXHOBwaSlV6S6jC-49R88n7qHeCMnaYiP_tZ0GkHc1pGHNqiLyzgYp6yfyQ"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id_token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMzUzNzA0OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDM0NTA2NDh9.GLD1f2FNm_MKIXGKuDR5WXIxkERmXHOBwaSlV6S6jC-49R88n7qHeCMnaYiP_tZ0GkHc1pGHNqiLyzgYp6yfyQ\"\n}"
+				},
+				{
+					"id": "b03d05e4-b5e4-448d-90c4-f954cce71da4",
+					"name": "login-bad-credentials",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "400",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"adminLogin\",\"password\":\"adminPassword\",\"rememberMe\":false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 21:53:48 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"https://www.jhipster.tech/problem/problem-with-message\",\n    \"title\": \"Unauthorized\",\n    \"status\": 401,\n    \"detail\": \"Bad credentials\",\n    \"instance\": \"/api/authenticate\",\n    \"message\": \"error.http.401\",\n    \"path\": \"/api/authenticate\"\n}"
+				}
+			]
+		},
+		{
+			"name": "get tasks list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2377323a-24ca-4d62-9a1b-b28edbc5e61e",
+						"exec": [
+							"let jsonBody = JSON.parse(responseBody);",
+							"// Проверка статуса ответа",
+							"// Если статус - 200 OK, выполняем проверки успешного ответа",
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"Status code name is \\\"OK\\\" \", function () {",
+							"        pm.response.to.have.status(\"OK\");",
+							"    });",
+							"",
+							"    pm.test(\"We have a massive of tasks in response\", function () {",
+							"        pm.expect(jsonBody.length).not.equals(0);",
+							"    });",
+							"",
+							"    let currentAmountOfTasks = pm.response.json().length;",
+							"    pm.environment.set('currentAmountOfTasks', currentAmountOfTasks)",
+							"",
+							"    if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
+							"        pm.environment.set(\"ids\", [])",
+							"        postman.setNextRequest('create a task')",
+							"    } else {",
+							"        let taskId_arr = pm.response.json().map((task) => {return task.id})",
+							"        pm.environment.set(\"ids\", [taskId_arr[taskId_arr.length-1]])",
+							"        pm.environment.set('lastID', taskId_arr[taskId_arr.length-1])",
+							"        postman.setNextRequest('change task text')}",
+							"",
+							"} else if (pm.response.code === 500) {",
+							"    // Если статус - 500 Internal server error, выполняем проверки для неуспешного ответа",
+							"",
+							"    pm.test(\"Status code name is \\\"Internal Server Error\\\" \", function () {",
+							"        pm.response.to.have.status(\"Internal Server Error\");",
+							"    });",
+							"",
+							"    pm.test(\"Response has error message\", function () {",
+							"        pm.response.to.have.jsonBody(\"title\", \"Internal Server Error\");",
+							"        pm.response.to.have.jsonBody(\"status\", 500);",
+							"        pm.response.to.have.jsonBody(\"detail\", \"No property 'string' found for type 'Task'\");",
+							"    });",
+							"}",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "51110745-669d-4234-adfc-01719da034bf",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "8eb16d99-cfa5-4038-9056-ab8deb5d018a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks?page=0&size=100",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "db1640f6-26b1-48c2-9e6c-f35e64430bb7",
+					"name": "gettasklist-successful",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks?page=0&size=100",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 20:53:14 GMT"
+						},
+						{
+							"key": "X-Total-Count",
+							"value": "9"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Link",
+							"value": "<http://localhost:8080/api/tasks?page=0&size=100>; rel=\"last\",<http://localhost:8080/api/tasks?page=0&size=100>; rel=\"first\""
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1001,\n        \"text\": \"some new new text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1002,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1003,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1004,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1005,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1006,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1007,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1008,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": 1009,\n        \"text\": \"some text\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    }\n]"
+				},
+				{
+					"id": "7ccf7778-3f43-41b6-8653-7249b2185717",
+					"name": "gettasklist-undefinedParameter",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks?page=0&size=100&sort=string",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "100"
+								},
+								{
+									"key": "sort",
+									"value": "string"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 20:53:55 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"https://www.jhipster.tech/problem/problem-with-message\",\n    \"title\": \"Internal Server Error\",\n    \"status\": 500,\n    \"detail\": \"No property 'string' found for type 'Task'\",\n    \"instance\": \"/api/tasks\",\n    \"message\": \"error.http.500\",\n    \"path\": \"/api/tasks\"\n}"
+				}
+			]
+		},
+		{
+			"name": "create a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86d0b6c7-13c8-4cfd-b94f-9633eabf8915",
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"// Проверка статуса ответа",
+							"// Если статус - 201 Created, выполняем проверки успешного ответа",
+							"if (pm.response.code === 201) {",
+							"",
+							"    pm.test(\"Status code name is \\\"Created\\\" \", function () {",
+							"        pm.response.to.have.status(\"Created\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"id\\\" of type \\\"number\\\"\", function () {",
+							"        pm.expect(jsonData.id).to.be.a(\"number\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"text\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.text).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"answer\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.answer).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"title\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.title).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    pm.environment.set(\"taskId\", jsonData.id);",
+							"    const ids = pm.environment.get(\"ids\")",
+							"    ids.push(jsonData.id)",
+							"    pm.environment.set(\"ids\", ids)",
+							"",
+							"    pm.environment.set('lastID', jsonData.id)",
+							"",
+							"    let currentAmountOfTasks = pm.environment.get(\"currentAmountOfTasks\");",
+							"    currentAmountOfTasks++;",
+							"    pm.environment.set('currentAmountOfTasks', currentAmountOfTasks)",
+							"",
+							"    if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
+							"        postman.setNextRequest(\"create a task\")",
+							"    } else {",
+							"        postman.setNextRequest('change task text')",
+							"    }",
+							"} else if (pm.response.code === 500) {",
+							"    // Если статус - 500 Internal server error, выполняем проверки для неуспешного ответа",
+							"",
+							"    pm.test(\"Status code name is \\\"Internal Server Error\\\" \", function () {",
+							"        pm.response.to.have.status(\"Internal Server Error\");",
+							"    });",
+							"",
+							"    pm.test(\"Response has error message\", function () {",
+							"        pm.response.to.have.jsonBody(\"title\", \"Internal Server Error\");",
+							"        pm.response.to.have.jsonBody(\"status\", 500);",
+							"        pm.response.to.have.jsonBody(\"detail\", \"Failure during data access\");",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "18240ba2-8859-4528-8561-031af560524c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "2670b3f1-149e-4772-ad04-3e07f5d27abd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "754d345a-5f8e-4937-b7cf-8e6b558285d6",
+					"name": "createatask-successful",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Location",
+							"value": "/api/tasks/1034"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 20:55:47 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-sqlverifierApp-params",
+							"value": "1034"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-sqlverifierApp-alert",
+							"value": "sqlverifierApp.task.created"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1034,\n    \"text\": \"some text\",\n    \"answer\": \"string\",\n    \"title\": \"string\"\n}"
+				},
+				{
+					"id": "635e83a8-adca-464d-8faa-5a28df9e0c5c",
+					"name": "createatask-emptyBody",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 20:57:20 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"https://www.jhipster.tech/problem/problem-with-message\",\n    \"title\": \"Internal Server Error\",\n    \"status\": 500,\n    \"detail\": \"Failure during data access\",\n    \"instance\": \"/api/tasks\",\n    \"message\": \"error.http.500\",\n    \"path\": \"/api/tasks\"\n}"
+				}
+			]
+		},
+		{
+			"name": "change task text",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "afd30b02-2ae2-4906-be40-fdfb985a3802",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9215982-688e-43a6-a436-c366574d701b",
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"// Проверка статуса ответа",
+							"// Если статус - 200 OK, выполняем проверки успешного ответа",
+							"if (pm.response.code === 200) {",
+							"",
+							"    pm.test(\"Status code name is \\\"OK\\\" \", function () {",
+							"        pm.response.to.have.status(\"OK\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"id\\\" of type \\\"number\\\"\", function () {",
+							"        pm.expect(jsonData.id).to.be.a(\"number\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"text\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.text).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"answer\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.answer).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"title\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.title).to.be.a(\"string\");",
+							"    });",
+							"",
+							"} else if (pm.response.code === 400) {",
+							"    // Если статус - 400 Bad request, выполняем проверки для неуспешного ответа",
+							"    ",
+							"    pm.test(\"Status code name is \\\"Bad Request\\\" \", function () {",
+							"        pm.response.to.have.status(\"Bad Request\");",
+							"    });",
+							"",
+							"    pm.test(\"Response has error message\", function () {",
+							"        pm.response.to.have.jsonBody(\"title\", \"Bad Request\");",
+							"        pm.response.to.have.jsonBody(\"status\", 400);",
+							"        pm.response.to.have.jsonBody(\"message\", \"error.idnull\");",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "94a0a197-31bd-4712-8577-a23842e4360c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"id\": \"{{lastID}}\",\n  \"text\": \"some new new text\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{lastID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{lastID}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "0d370caa-1eba-4f93-bfc4-332b0a17e577",
+					"name": "changetasktext-successful",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{lastID}}\",\n  \"text\": \"some new new text\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{lastID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{lastID}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 21:00:52 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-sqlverifierApp-params",
+							"value": "1038"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-sqlverifierApp-alert",
+							"value": "sqlverifierApp.task.updated"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1038,\n    \"text\": \"some new new text\",\n    \"answer\": \"string\",\n    \"title\": \"string\"\n}"
+				},
+				{
+					"id": "6dacaa90-f1da-4395-87dc-040ec6a33491",
+					"name": "changetasktext-missingIdField",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"some new new text\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{lastID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{lastID}}"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 21:01:25 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"https://www.jhipster.tech/problem/problem-with-message\",\n    \"title\": \"Bad Request\",\n    \"status\": 400,\n    \"detail\": \"400 BAD_REQUEST, ProblemDetailWithCause[type='https://www.jhipster.tech/problem/problem-with-message', title='Bad Request', status=400, detail='null', instance='null', properties='{message=error.idnull, params=task}']\",\n    \"instance\": \"/api/tasks/1038\",\n    \"message\": \"error.idnull\",\n    \"params\": \"task\",\n    \"path\": \"/api/tasks/1038\"\n}"
+				}
+			]
+		},
+		{
+			"name": "get task data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b9a288a-9002-4aa4-94e6-6bdb47f0fb9e",
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"// Проверка статуса ответа",
+							"// Если статус - 200 OK, выполняем проверки успешного ответа",
+							"if (pm.response.code === 200) {",
+							"",
+							"    pm.test(\"Status code name is \\\"OK\\\" \", function () {",
+							"        pm.response.to.have.status(\"OK\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"id\\\" of type \\\"number\\\"\", function () {",
+							"        pm.expect(jsonData.id).to.be.a(\"number\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"text\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.text).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"answer\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.answer).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    pm.test(\"Response body structure has field \\\"title\\\" of type \\\"string\\\"\", function () {",
+							"        pm.expect(jsonData.title).to.be.a(\"string\");",
+							"    });",
+							"",
+							"    let arr = pm.environment.get('ids')",
+							"    arr.forEach((id)=>{",
+							"        pm.sendRequest(",
+							"            {url: pm.environment.get('baseUrl')+`/tasks/${id}`,",
+							"            method: 'DELETE',",
+							"            header:",
+							"            {'Authorization': 'Bearer ' + pm.environment.get('token'),",
+							"            'accept': '*/*'}",
+							"            }",
+							"            , function (err, response) {",
+							"            console.log(response);",
+							"        });",
+							"    })",
+							"",
+							"} else if (pm.response.code === 404) {",
+							"    // Если статус - 404 Not Found, выполняем проверки для неуспешного ответа",
+							"    ",
+							"    pm.test(\"Status code name is \\\"Not Found\\\" \", function () {",
+							"        pm.response.to.have.status(\"Not Found\");",
+							"    });",
+							"",
+							"    pm.test(\"Response has error message\", function () {",
+							"        pm.response.to.have.jsonBody(\"title\", \"Not Found\");",
+							"        pm.response.to.have.jsonBody(\"status\", 404);",
+							"        pm.response.to.have.jsonBody(\"detail\", \"404 NOT_FOUND\");",
+							"    });",
+							"}",
+							"",
+							"pm.environment.unset('token');",
+							"pm.environment.unset('ids');",
+							"pm.environment.unset('currentAmountOfTasks');",
+							"pm.environment.unset('lastID');",
+							"pm.environment.unset('taskId');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "1bb79285-cb6e-48c5-b63a-fd2cef00129c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{lastID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{lastID}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "607648eb-3ea9-42b2-83e6-20bb37522747",
+					"name": "gettaskdata-successful",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{lastID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{lastID}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 21:03:35 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1038,\n    \"text\": \"some new new text\",\n    \"answer\": \"string\",\n    \"title\": \"string\"\n}"
+				},
+				{
+					"id": "35b68345-4335-40f7-b96b-a7b7185cf966",
+					"name": "gettaskdata-IDNotFile",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks/999098",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"999098"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 21:05:09 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Permissions-Policy",
+							"value": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"https://www.jhipster.tech/problem/problem-with-message\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"detail\": \"404 NOT_FOUND\",\n    \"instance\": \"/api/tasks/999098\",\n    \"message\": \"error.http.404\",\n    \"path\": \"/api/tasks/999098\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2cdc894a-2ef7-4b75-af03-8a25d379ced6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e179976e-f23c-4a34-ade4-c944bc396009",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
