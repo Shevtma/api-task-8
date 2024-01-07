@@ -1815,7 +1815,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "7e46dc15-4bbe-4657-a056-615e6eb71dae",
+				"id": "e7ea44ae-38a9-4f3d-8896-6491c0adf20c",
 				"type": "text/javascript",
 				"exec": [
 					"    const loginResponseExpectedSchema = {",
@@ -1834,7 +1834,7 @@
 					"        \"items\": {",
 					"            \"type\": \"object\",",
 					"            \"properties\": {",
-					"                \"id\": {",
+					"                \"idss\": {",
 					"                    \"type\": \"integer\"",
 					"                },",
 					"                \"text\": {",
@@ -1882,7 +1882,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "2e970c50-b2fc-4228-b930-e403ad16fd17",
+				"id": "23cb0339-deb6-48ab-9798-d7218a3511da",
 				"type": "text/javascript",
 				"exec": [
 					""
